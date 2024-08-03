@@ -1,4 +1,5 @@
 using CleanArch.Infra.Data.Context;
+using CleanArch.Infra.IoC;
 using CleanArch.Mvc.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,10 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var universityIdentityConnectionString = builder.Configuration.GetConnectionString("UniversityIdentityDbConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(universityIdentityConnectionString));
 
+
 var universityConnectionString = builder.Configuration.GetConnectionString("UniversityDbConnection") ?? throw new InvalidOperationException("University connection string is missing");
+
 builder.Services.AddDbContext<UniversityDbContext>(options =>
     options.UseSqlServer(universityConnectionString));
 
@@ -19,6 +23,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+DependencyContainer.RegisterServices(builder.Services);
 
 var app = builder.Build();
 
