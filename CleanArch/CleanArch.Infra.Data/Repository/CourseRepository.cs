@@ -14,6 +14,6 @@ public class CourseRepository : ICourseRepository
     }
     public IEnumerable<Course> GetCourses()
     {
-        throw new NotImplementedException();
+        return _context.Set<Course>();
     }
 }

@@ -13,9 +13,11 @@ public class CourseService : ICourseService
         _courseRepository = courseRepository;
     }
 
-    public IEnumerable<CourseViewModel> GetCourses()
+    public CourseViewModel GetCourses()
     {
-        var courses = _courseRepository.GetCourses();
-        throw new NotImplementedException();
+        return new CourseViewModel
+        {
+            Coursees = _courseRepository.GetCourses()
+        };
     }
 }
