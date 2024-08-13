@@ -12,6 +12,12 @@ public class CourseRepository : ICourseRepository
     {
         _context = context;
     }
+
+    public void Add(Course course)
+    {
+        _context.Add(course);
+    }
+
     public IEnumerable<Course> GetCourses()
     {
         return _context.Set<Course>();
